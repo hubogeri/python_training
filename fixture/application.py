@@ -13,6 +13,16 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
+
+    def destroy(self):
+        self.wd.quit()
+
     def open_home_page(self):
         wd = self.wd
         wd.get("http://127.0.0.1/addressbook/")
@@ -24,13 +34,3 @@ class Application:
     def press_home_page_from_nav_pane(self):
         wd = self.wd
         wd.find_element_by_link_text("home").click()
-
-    def is_valid(self):
-        try:
-            self.wd.current_url
-            return True
-        except:
-            return False
-
-    def destroy(self):
-        self.wd.quit()
