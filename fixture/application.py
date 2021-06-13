@@ -21,5 +21,9 @@ class Application:
         wd = self.wd
         wd.find_element_by_link_text("home page").click()
 
+    def open_home_page_from_nav_pane(self):
+        wd = self.wd
+        wd.find_element_by_link_text("home").click()
+
     def destroy(self):
         self.wd.quit()

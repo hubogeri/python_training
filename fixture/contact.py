@@ -117,3 +117,33 @@ class ContactHelper:
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(addr)
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # select first contact
+        wd.find_element_by_name("selected[]").click()
+        # submit deletion
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.app.open_home_page_from_nav_pane()
+
+    def edit_first_contact(self, contact):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # select first group
+        wd.find_element_by_name("selected[]").click()
+        # submit editing
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        # fill contact form
+        self.input_general_info(contact.fname, contact.mname, contact.lname, contact.nick, contact.title, contact.comp,
+                                contact.addr)
+        self.input_phone(contact.home, contact.mobile, contact.work, contact.fax)
+        self.input_email(contact.email1, contact.email2, contact.email3)
+        self.input_homepage(contact.homepage)
+        self.input_birth_date(contact.bday, contact.bmonth, contact.byear)
+        self.input_anniversary_date(contact.aday, contact.amonth, contact.ayear)
+        self.input_second_info(contact.secaddr, contact.secphone, contact.note)
+        # submit contact updating
+        wd.find_element_by_name("update").click()
+        self.app.return_to_home_page()
