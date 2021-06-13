@@ -27,7 +27,7 @@ class GroupHelper:
         wd = self.app.wd
         self.open_groups_page()
         self.select_first_group()
-        # submit deletion
+        # submit group deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
 
@@ -35,7 +35,7 @@ class GroupHelper:
         wd = self.app.wd
         self.open_groups_page()
         self.select_first_group()
-        # submit editing
+        # submit group editing
         wd.find_element_by_name("edit").click()
         self.fill_group_form(new_group_data)
         # submit group updating

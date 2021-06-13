@@ -20,7 +20,6 @@ class SessionHelper:
         wd.find_element_by_link_text("Logout").click()
         wd.find_element_by_name("user")
 
-
     def ensure_login(self, username, password):
         wd = self.app.wd
         if self.is_logged_in():

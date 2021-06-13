@@ -26,7 +26,7 @@ class ContactHelper:
     def edit_first_contact(self, contact):
         wd = self.app.wd
         self.app.open_home_page()
-        # submit editing
+        # submit contact editing
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # fill contact form
         self.input_general_info(contact)
@@ -43,8 +43,9 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         self.select_first_contact()
-        # submit deletion
+        # submit contact deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+        # press yes on browser confirmation prompt
         wd.switch_to_alert().accept()
         self.app.press_home_page_from_nav_pane()
 
@@ -56,14 +57,14 @@ class ContactHelper:
 
     def input_anniversary_date(self, contact):
         wd = self.app.wd
-        self.change_anniv_option_value("aday", contact.aday)
-        self.change_anniv_option_value("amonth", contact.amonth)
+        self.change_option_from_drop_down("aday", contact.aday)
+        self.change_option_from_drop_down("amonth", contact.amonth)
         self.change_field_value("ayear", contact.ayear)
 
     def input_birth_date(self, contact):
         wd = self.app.wd
-        self.change_birth_option_value("bday", contact.bday)
-        self.change_birth_option_value("bmonth", contact.bmonth)
+        self.change_option_from_drop_down("bday", contact.bday)
+        self.change_option_from_drop_down("bmonth", contact.bmonth)
         self.change_field_value("byear", contact.byear)
 
     def input_social_network_info(self, contact):
@@ -101,19 +102,11 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def change_birth_option_value(self, option_name, text):
+    def change_option_from_drop_down(self, option_name, text):
         wd = self.app.wd
         if text is not None:
             wd.find_element_by_name(option_name).click()
             Select(wd.find_element_by_name(option_name)).select_by_visible_text(text)
-            wd.find_element_by_xpath("//option[@value='"+text+"']").click()
-
-    def change_anniv_option_value(self, option_name, text):
-        wd = self.app.wd
-        if text is not None:
-            wd.find_element_by_name(option_name).click()
-            Select(wd.find_element_by_name(option_name)).select_by_visible_text(text)
-            wd.find_element_by_xpath("//option[normalize-space(.)='{}']".format(text)).click()
 
     def count(self):
         wd = self.app.wd
