@@ -8,7 +8,8 @@ class ContactHelper:
 
     def press_add_new_from_nav_pane(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
+        if not (wd.current_url.endswith("edit.php") and len(wd.find_elements_by_name("submit")) > 0):
+            wd.find_element_by_link_text("add new").click()
 
     def create(self, contact):
         wd = self.app.wd
@@ -25,7 +26,7 @@ class ContactHelper:
 
     def edit_first_contact(self, contact):
         wd = self.app.wd
-        self.app.open_home_page()
+        self.app.press_home_page_from_nav_pane()
         # submit contact editing
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # fill contact form
