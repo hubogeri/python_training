@@ -1,4 +1,5 @@
 from selenium.webdriver.support.ui import Select
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -117,3 +118,14 @@ class ContactHelper:
     def ensure_contact_exists(self, contact):
         if self.count() == 0:
             self.create(contact)
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        contacts = []
+        for element in wd.find_elements_by_name("entry"):
+            name = element.find_element_by_xpath('//td[3]').text
+            surname = element.find_element_by_xpath('//td[2]').text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(fname=name, lname=surname, id=id))
+        return contacts
